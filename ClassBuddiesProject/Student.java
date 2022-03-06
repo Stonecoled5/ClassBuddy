@@ -72,7 +72,7 @@ public class Student {
 
   }
 
-  private void denyRequest(Request request{
+  private void denyRequest(Request request){
     // delete request object in database
   }
 

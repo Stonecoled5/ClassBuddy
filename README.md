@@ -7,5 +7,6 @@ Actions
   - [ ] Add Friends
   - [ ] Add your classes, extracirriculars, and hobbies
   - [ ] Search for other students
+  - [ ] Create your profile
 
 

@@ -13,10 +13,10 @@ Actions
 
 
 Classes
-- [ ] Student
-- [ ] Course
-- [ ] Organizations
-- [ ] University  
+- [ ] Student - Dane
+- [ ] Course - Cole
+- [ ] Organizations - Ananaya
+- [ ] University - University  
 
 Student Class
 - username

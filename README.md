@@ -18,3 +18,8 @@ Classes
 - [ ] Organizations
 - [ ] University  
 
+Student Class
+- username
+- email
+- password
+- list of friends 

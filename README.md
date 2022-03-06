@@ -23,3 +23,10 @@ Student Class
 - email
 - password
 - list of friends 
+
+Extra Features
+- Time Stamps
+- Organisation API
+- Chat feature
+- Share schedue to others
+

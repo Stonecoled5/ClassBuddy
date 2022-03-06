@@ -8,5 +8,13 @@ Actions
   - [ ] Add your classes, extracirriculars, and hobbies
   - [ ] Search for other students
   - [ ] Create your profile
+  - [ ] Get course data from madgrades API
+  - [ ] Check out WIN to see if they have an API for use to use
 
+
+Classes
+- [ ] Student
+- [ ] Course
+- [ ] Organizations
+- [ ] University  
 

@@ -1,6 +1,7 @@
 
+package Application;
+
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class Student {
 
@@ -22,6 +23,7 @@ public class Student {
   public ArrayList<Request> requests;
 
 
+
   public Student(String username, String password, String email){
 
     //check if student exists
@@ -30,6 +32,7 @@ public class Student {
       this.password = password;
       this.email = email;
       friendsList = new ArrayList<>();
+      //courses = new ArrayList<Course>();
     }
 
   }
@@ -37,24 +40,55 @@ public class Student {
   private void addFriend(Student target){
 
     // implement a request system
-
     friendsList.add(target);
     target.friendsList.add(this);
 
   }
 
+  /**
+   * Each student will have a unique username, along with a unique email. i.e. One email per student
+   */
+  @Override
+  public boolean equals(Object s1){
+
+    if (s1 == null){
+      return false;
+    }
+
+    // make sure s1 is a student, check emails and usernames for equality
+    if (s1 instanceof Student){
+      if (((Student) s1).email.equals(this.email) && ((Student) s1).username.equals(this.username)){
+        return true;
+      } else {
+        // users not equal
+        return false;
+      }
+    } else {
+      // s1 not instance of Student
+      return false;
+    }
+
+  }
+
+
   private boolean checkIfStudentExists(String email, String username){
     boolean emailExists = false;
     boolean usernameExists = false;
 
-    if (studentsList.contains(email)){
-      emailExists = true;
+    for (Student s : studentsList){
+      if (s.email.equals(email)) {
+        emailExists = true;
+        break;
+      }
     }
 
-    if (studentsList.contains(username)){
-      usernameExists = true;
+    for (Student s : studentsList){
+      if (s.username.equals(username)){
+        usernameExists = true;
+        break;
+      }
     }
-
+    
     return emailExists && usernameExists;
   }
 
@@ -67,8 +101,7 @@ public class Student {
 
   private void acceptRequest(Request request){
 
-    friendsList.add(request.getRequestedUser());
-    request.getRequestedUser().friendsList.add(this);
+    addFriend(request.getRequester()); // may need to use getRequestedUser if problems
 
   }
 

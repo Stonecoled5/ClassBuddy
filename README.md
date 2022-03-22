@@ -16,7 +16,7 @@ Classes
 - [ ] Student - Dane
 - [ ] Course - Cole
 - [ ] Organizations - Ananaya
-- [ ] University - University  
+- [ ] University - Praveen  
 
 Student Class
 - username

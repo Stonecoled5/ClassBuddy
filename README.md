@@ -32,9 +32,13 @@ Extra Features
 
 - Add discussion sections
 
-GUI
+GUI - Ananya & Cole
 - Login Page -- Creating students
 - Profile Page -- Adding courses and orgs
 - Explore Page -- Connect with other students by going through their schedule
+
+Database - Dane & Praveen
+
+
 
 

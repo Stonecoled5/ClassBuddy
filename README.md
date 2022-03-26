@@ -30,14 +30,22 @@ Extra Features
 - Chat feature
 - Share schedue to others
 
+
+
+
+
 - Add discussion sections
 
 GUI - Ananya & Cole
+- Add in a search for the courses
 - Login Page -- Creating students
 - Profile Page -- Adding courses and orgs
 - Explore Page -- Connect with other students by going through their schedule
 
 Database - Dane & Praveen
+- Student
+- Courses - static
+- 
 
 
 

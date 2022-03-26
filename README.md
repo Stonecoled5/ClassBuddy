@@ -35,7 +35,7 @@ Extra Features
 
 
 - Add discussion sections
-- Private/public profiles
+- Private/public profiles (debate later?)
 
 GUI - Ananya & Cole
 - Add in a search for the courses

@@ -35,6 +35,7 @@ Extra Features
 
 
 - Add discussion sections
+- Private/public profiles
 
 GUI - Ananya & Cole
 - Add in a search for the courses
@@ -45,7 +46,9 @@ GUI - Ananya & Cole
 Database - Dane & Praveen
 - Student
 - Courses - static
-- 
+
+
+
 
 
 

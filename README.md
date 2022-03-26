@@ -30,3 +30,8 @@ Extra Features
 - Chat feature
 - Share schedue to others
 
+GUI
+- Login Page -- Creating students
+- Profile Page -- Adding courses and orgs
+- Explore Page -- Connect with other students by going through their schedule
+

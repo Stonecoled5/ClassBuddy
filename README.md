@@ -38,10 +38,9 @@ Extra Features
 - Private/public profiles (debate later?)
 
 GUI - Ananya & Cole
-- Add in a search for the courses
 - Login Page -- Creating students
 - Profile Page -- Adding courses and orgs
-- Explore Page -- Connect with other students by going through their schedule
+- Explore Page -- Connect with other students by going through their schedule - autofilling search
 
 Database - Dane & Praveen
 - Student

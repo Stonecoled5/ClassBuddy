@@ -1,6 +1,4 @@
 
-package Application;
-
 import java.util.ArrayList;
 
 public class Student {
@@ -17,10 +15,11 @@ public class Student {
   private String firstName;
   private String lastName;
   private int year; // 1 = Fresh. 2 = Soph. 3 = Jr. 4 = Sr. 5 = Other
-
+  private ArrayList<Course> courses;
   // friends fields
   public ArrayList<Student> friendsList;
   public ArrayList<Request> requests;
+
 
 
 
@@ -32,9 +31,32 @@ public class Student {
       this.password = password;
       this.email = email;
       friendsList = new ArrayList<>();
-      //courses = new ArrayList<Course>();
+      courses = new ArrayList<>();
     }
+  }
 
+  /**
+   * This method will determine if a student has courses with another student
+   * @return
+   */
+  public boolean hasCourses(Student student){
+    ArrayList<Course> studentSchedule = student.courses;
+
+    for (Course c : studentSchedule){
+      for (Course course : courses){
+        if (c.equals(course)){
+          System.out.println(username + " has " + c.getName() + " with " + student.username );
+        }
+      }
+    }
+    return true;
+  }
+
+  public boolean hasCourse(Course course){
+    return courses.contains(course);
+  }
+  public void addCourse(Course course){
+    courses.add(course);
   }
 
   private void addFriend(Student target){
@@ -88,7 +110,7 @@ public class Student {
         break;
       }
     }
-    
+
     return emailExists && usernameExists;
   }
 
@@ -135,4 +157,3 @@ public class Student {
     this.year = year;
   }
 }
-

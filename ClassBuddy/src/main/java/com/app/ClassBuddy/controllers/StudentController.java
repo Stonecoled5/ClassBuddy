@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class StudentController{
 
-    final private String SCHOOL_DOMAIN = "wisc.edu";
 
     @Autowired
     private StudentDAO studentDAO;
@@ -59,13 +58,4 @@ public class StudentController{
     }
 
     
-
-    private boolean emailIsCorrect(Student student){
-        String[] parts = student.getEmail().split("@");
-        if (!parts[1].equals(SCHOOL_DOMAIN)){
-            return false;
-        } else {
-            return true;
-        }
-    }
 }

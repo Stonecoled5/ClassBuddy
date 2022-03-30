@@ -58,9 +58,6 @@ public class StudentController{
         return studentDAO.findById(studentId);
     }
 
-    // @GetMapping("/students/{studentEmail}")
-    // public Student findStudentByEmail(@PathVariable final String studentEmail){
-    //     }
     
 
     private boolean emailIsCorrect(Student student){

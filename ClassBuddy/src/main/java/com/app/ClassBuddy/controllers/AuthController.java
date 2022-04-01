@@ -31,11 +31,26 @@ public class AuthController {
         String email = authenticationRequest.getEmail();
         String password = authenticationRequest.getPassword();
     
-        if (!emailIsCorrect(email)) {
-            return ResponseEntity.badRequest().body("You must use your @wisc.edu email!");
+        // check if password is over 4 characters
+        if (!passwordIsStrong(password)){
+            return ResponseEntity.badRequest().body("Ensure your password is over 4 characters long."); 
         }
+    
+        try {
+            if (!emailIsCorrect(email)) {
+                return ResponseEntity.badRequest().body("You must use your @wisc.edu email!");
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            // handles not having the '@' sign
+            return ResponseEntity.badRequest().body("Please enter a valid email address!");
+        }
+
+        // check if email exists
+        if (emailExists(email)){
+            return ResponseEntity.badRequest().body("Your email already exists!");
+        }
+
         Student student = new Student(email, password);
-        // add in checking for bad email (not @wisc)
         
         
         try {
@@ -44,20 +59,23 @@ public class AuthController {
             return ResponseEntity.ok(new AuthenticationResponse("Error during signin"));
         }
 
-        
+    
         return ResponseEntity.ok(new AuthenticationResponse("Student signed up successfully under the email " + email + "!"));
     }
+
 
     @PostMapping("/login")
     private ResponseEntity<?> signInStudent(@RequestBody AuthenticationRequest authenticationRequest){
         System.out.println("Attempting to log in user");
         String email = authenticationRequest.getEmail();
         String password = authenticationRequest.getPassword();
-        
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
-        } catch (BadCredentialsException e) {
-            return ResponseEntity.ok(new AuthenticationResponse("Unable to login user!"));
+            System.out.println("trying");        
+
+        } catch (Exception e) {
+            System.out.println("Caught");
+            return ResponseEntity.badRequest().body("Unable to login user!");
 
         }
 
@@ -66,7 +84,7 @@ public class AuthController {
     }
 
 
-    private boolean emailIsCorrect(String email){
+    private boolean emailIsCorrect(String email) throws ArrayIndexOutOfBoundsException {
         String[] parts = email.split("@");
         if (!parts[1].equals(SCHOOL_DOMAIN)){
             return false;
@@ -74,4 +92,13 @@ public class AuthController {
             return true;
         }
     }
+
+    private boolean emailExists(String email) {
+        return studentRepository.findByEmail(email) != null;
+    }
+
+    private boolean passwordIsStrong(String pass) {
+        return pass.length() > 4;
+    }
+
 }

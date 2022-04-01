@@ -36,16 +36,6 @@ public class StudentController{
         return studentDAO.findByEmail(email);
     }
 
-    /*
-     * This is for adding a single student to the database, during account creation
-     */
-    @PostMapping("/addStudent")
-    public void addStudent(@RequestBody final Student student) throws InvalidAttributesException{
-        // verify @wisc email
-        if (!emailIsCorrect(student)) throw new InvalidAttributesException("You must use your @wisc.edu account... Account provided: " + student.getEmail());
-        
-        studentDAO.save(student);
-    }
 
     @GetMapping("/students")
     public List<Student> findStudents(){

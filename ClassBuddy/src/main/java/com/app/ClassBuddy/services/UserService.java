@@ -1,5 +1,7 @@
 package com.app.ClassBuddy.services;
 
+import java.util.ArrayList;
+
 import com.app.ClassBuddy.database.documents.Student;
 import com.app.ClassBuddy.database.respositories.StudentRepository;
 
@@ -25,7 +27,7 @@ public class UserService implements UserDetailsService {
         String email = foundStudent.getEmail();
         String password = foundStudent.getPassword();
 
-        return new User(email, password, null);
+        return new User(email, password, new ArrayList<>());
     }
     
     

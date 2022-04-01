@@ -23,12 +23,6 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     private UserService userService;
 
 
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        // TODO Auto-generated method stub
-        return super.authenticationManagerBean();
-    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -40,14 +34,15 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable().authorizeRequests().antMatchers("/signup", "/login").permitAll().anyRequest().authenticated();
     }
 
+    @Bean
     public PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();
     }
 
     @Override
-    protected AuthenticationManager authenticationManager() throws Exception {
-        // TODO Auto-generated method stub
-        return super.authenticationManager();
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
 }

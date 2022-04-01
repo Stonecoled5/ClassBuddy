@@ -14,6 +14,11 @@ public class Student {
     private int year; // 1 = Fresh. 2 = Soph. 3 = Jr. 4 = Sr. 5 = Other
     private String username;
 
+    public Student(String email, String password){
+        this.email = email;
+        this.password = password;
+    }
+
     public String getEmail() {
         return this.email;
     }

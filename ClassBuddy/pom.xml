@@ -14,7 +14,7 @@
 	<name>ClassBuddy</name>
 	<description>Connect with your friends through this app in order to see what classes and clubs you two have in common</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>8</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -70,6 +70,14 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 			<version>2.6.3</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.json/json -->
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20210307</version>
+		</dependency>
+
 
 	</dependencies>
 

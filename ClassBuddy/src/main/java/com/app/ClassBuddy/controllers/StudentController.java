@@ -8,7 +8,6 @@ import com.app.ClassBuddy.database.daos.StudentDAO;
 import com.app.ClassBuddy.database.documents.Student;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.repository.Query;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-public class StudentController{
+public class StudentController {
 
 
     @Autowired
@@ -25,6 +24,7 @@ public class StudentController{
 
     @PostMapping("/students")
     public void addStudents(@RequestBody final List<Student> students){
+        System.out.println("Adding student");
         studentDAO.saveAll(students);
     }
 

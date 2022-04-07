@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 public class Course {
+  
   @Id  
   private String Id;
   private String number;

@@ -28,9 +28,7 @@ public class CourseController {
     @Autowired
     CourseRepository courseRepository;
 
-    @PostMapping("/addAllCourses")
     public ResponseEntity<?> addAllCourses() {
-      System.out.println("ATTEIMPTING TO ADD");
         int page = 1;
         int lastPage = 418;
     

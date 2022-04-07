@@ -5,6 +5,7 @@ import java.util.List;
 import javax.naming.directory.InvalidAttributesException;
 
 import com.app.ClassBuddy.database.daos.StudentDAO;
+import com.app.ClassBuddy.database.documents.Course;
 import com.app.ClassBuddy.database.documents.Student;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,18 +25,18 @@ public class StudentController {
 
     @PostMapping("/students")
     public void addStudents(@RequestBody final List<Student> students){
-        System.out.println("Adding student");
         studentDAO.saveAll(students);
     }
 
-    /*
-     * Used for finding a student by a specific email (loggin in)
-     */
     @GetMapping("/student/{email}")
     public Student getStudentByEmail(@PathVariable String email){
         return studentDAO.findByEmail(email);
     }
 
+    @GetMapping("/algoTest")
+    public void algoTest() {
+        // studentDAO.algorithm();
+    }
 
     @GetMapping("/students")
     public List<Student> findStudents(){
@@ -45,6 +46,21 @@ public class StudentController {
     @GetMapping("/students/{studentId}")
     public Student findStudent(@PathVariable final String studentId){
         return studentDAO.findById(studentId);
+    }
+
+    @PostMapping("/students/{email}/{firstName}")
+    public void updateFirstName(@PathVariable String email, @PathVariable final String firstName) {
+        studentDAO.setFirstName(email, firstName);
+    }
+
+    @PostMapping("students/{email}")
+    public void updateSchedule(@PathVariable String email, @RequestBody Course course) {
+        studentDAO.addCourseToSchedule(email, course);
+    }
+
+    @PostMapping("students/addCourse")
+    public void addCourse(@RequestBody final Course c) {
+        
     }
 
     

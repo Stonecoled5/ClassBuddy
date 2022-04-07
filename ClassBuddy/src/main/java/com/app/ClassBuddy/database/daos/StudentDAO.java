@@ -47,18 +47,20 @@ public class StudentDAO {
             mongoTemplate.save(s);
         }
     }
-    
-    public void algorithm() {
-       List<Student> students = findAll();
 
-       for (Student s : students){
-            // iterating through entire document... find schedules
-            for (Course c : s.getSchedule()) {
-                if ()
-            }
-       }
+    // starting algorithm
+    
+    // public void algorithm() {
+    //    List<Student> students = findAll();
+
+    //    for (Student s : students){
+    //         // iterating through entire document... find schedules
+    //         for (Course c : s.getSchedule()) {
+                
+    //         }
+    //    }
        
-    }
+    // }
 
     public void setFirstName(String email, String name) {
         Student s = findByEmail(email);

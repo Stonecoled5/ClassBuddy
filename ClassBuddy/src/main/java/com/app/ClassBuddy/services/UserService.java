@@ -20,7 +20,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Student foundStudent = studentRepository.findByEmail(username);
+        Student foundStudent = studentRepository.findByEmail(username); // username will be email
 
         if (foundStudent == null) return null;
 
@@ -29,6 +29,9 @@ public class UserService implements UserDetailsService {
 
         return new User(email, password, new ArrayList<>());
     }
+
+
+
     
     
 

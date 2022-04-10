@@ -40,6 +40,7 @@ Extra Features
 GUI - Ananya & Cole
 - Login Page -- Creating students
 - Profile Page -- Adding courses and orgs
+  - Fields for adding Student data like name, courses
 - Explore Page -- Connect with other students by going through their schedule - autofilling search
 
 Database - Dane & Praveen

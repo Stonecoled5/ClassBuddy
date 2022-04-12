@@ -3,6 +3,7 @@ package com.app.ClassBuddy.services;
 import java.util.ArrayList;
 
 import com.app.ClassBuddy.database.documents.Student;
+import com.app.ClassBuddy.database.dtos.StudentRegistrationDto;
 import com.app.ClassBuddy.database.respositories.StudentRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,16 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private StudentRepository studentRepository;
+
+    public Student save(StudentRegistrationDto registrationDto) {
+        System.out.println("creating sutdent");
+
+        Student student = new Student(registrationDto.getEmail(), registrationDto.getPassword());
+        student.setFirstName(registrationDto.getFirstName());
+        student.setLastName(registrationDto.getLastName());
+
+        return studentRepository.save(student);
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

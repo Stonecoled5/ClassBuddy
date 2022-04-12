@@ -23,45 +23,45 @@ public class StudentController {
     @Autowired
     private StudentDAO studentDAO;
 
-    @PostMapping("/students")
-    public void addStudents(@RequestBody final List<Student> students){
-        studentDAO.saveAll(students);
-    }
+    // @PostMapping("/students")
+    // public void addStudents(@RequestBody final List<Student> students){
+    //     studentDAO.saveAll(students);
+    // }
 
-    @GetMapping("/student/{email}")
-    public Student getStudentByEmail(@PathVariable String email){
-        return studentDAO.findByEmail(email);
-    }
+    // @GetMapping("/student/{email}")
+    // public Student getStudentByEmail(@PathVariable String email){
+    //     return studentDAO.findByEmail(email);
+    // }
 
-    @GetMapping("/algoTest")
-    public void algoTest() {
-        // studentDAO.algorithm();
-    }
+    // @GetMapping("/algoTest")
+    // public void algoTest() {
+    //     // studentDAO.algorithm();
+    // }
 
-    @GetMapping("/students")
-    public List<Student> findStudents(){
-        return studentDAO.findAll();
-    }
+    // @GetMapping("/students")
+    // public List<Student> findStudents(){
+    //     return studentDAO.findAll();
+    // }
 
-    @GetMapping("/students/{studentId}")
-    public Student findStudent(@PathVariable final String studentId){
-        return studentDAO.findById(studentId);
-    }
+    // @GetMapping("/students/{studentId}")
+    // public Student findStudent(@PathVariable final String studentId){
+    //     return studentDAO.findById(studentId);
+    // }
 
-    @PostMapping("/students/{email}/{firstName}")
-    public void updateFirstName(@PathVariable String email, @PathVariable final String firstName) {
-        studentDAO.setFirstName(email, firstName);
-    }
+    // @PostMapping("/students/{email}/{firstName}")
+    // public void updateFirstName(@PathVariable String email, @PathVariable final String firstName) {
+    //     studentDAO.setFirstName(email, firstName);
+    // }
 
-    @PostMapping("students/{email}")
-    public void updateSchedule(@PathVariable String email, @RequestBody Course course) {
-        studentDAO.addCourseToSchedule(email, course);
-    }
+    // @PostMapping("students/{email}")
+    // public void updateSchedule(@PathVariable String email, @RequestBody Course course) {
+    //     studentDAO.addCourseToSchedule(email, course);
+    // }
 
-    @PostMapping("students/addCourse")
-    public void addCourse(@RequestBody final Course c) {
+    // @PostMapping("students/addCourse")
+    // public void addCourse(@RequestBody final Course c) {
         
-    }
+    // }
 
     
 }

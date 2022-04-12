@@ -2,6 +2,7 @@ com\app\ClassBuddy\controllers\AuthController.class
 com\app\ClassBuddy\models\AuthenticationRequest.class
 com\app\ClassBuddy\controllers\CourseController.class
 com\app\ClassBuddy\database\documents\Course.class
+com\app\ClassBuddy\database\dtos\StudentRegistrationDto.class
 com\app\ClassBuddy\database\daos\CourseDAO.class
 com\app\ClassBuddy\controllers\StudentController.class
 com\app\ClassBuddy\ClassBuddyApplication.class
@@ -9,6 +10,7 @@ com\app\ClassBuddy\database\daos\StudentDAO.class
 com\app\ClassBuddy\database\documents\Student.class
 com\app\ClassBuddy\database\respositories\CourseRepository.class
 com\app\ClassBuddy\models\AuthenticationResponse.class
+com\app\ClassBuddy\database\documents\Year.class
 com\app\ClassBuddy\AppSecurityConfig.class
 com\app\ClassBuddy\database\respositories\StudentRepository.class
 com\app\ClassBuddy\services\UserService.class

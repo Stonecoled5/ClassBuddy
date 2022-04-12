@@ -1,19 +1,31 @@
 package com.app.ClassBuddy.controllers;
 
+import com.app.ClassBuddy.database.daos.StudentDAO;
 import com.app.ClassBuddy.database.documents.Student;
+import com.app.ClassBuddy.database.dtos.StudentRegistrationDto;
 import com.app.ClassBuddy.database.respositories.StudentRepository;
 import com.app.ClassBuddy.models.AuthenticationRequest;
 import com.app.ClassBuddy.models.AuthenticationResponse;
+import com.app.ClassBuddy.services.UserService;
 
+import org.springframework.http.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
-@RestController
+@Controller
+@RequestMapping
 public class AuthController {
 
     final private String SCHOOL_DOMAIN = "wisc.edu";
@@ -25,63 +37,50 @@ public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    UserService userService;
+
     @PostMapping("/signup")
-    private ResponseEntity<?> addStudent(@RequestBody AuthenticationRequest authenticationRequest){
-        String email = authenticationRequest.getEmail();
-        String password = authenticationRequest.getPassword();
+    public String registerStudentAccount(@ModelAttribute("student") StudentRegistrationDto studentRegistrationDto) {
+        return validateStudentSignup(studentRegistrationDto);
+    }
+
+    @GetMapping("/signup")
+    public String showRegistartaionForm(Model model) {
+        model.addAttribute("student", new Student());
+        return "registration";
+    }
+
+    private String validateStudentSignup(StudentRegistrationDto studentRegistrationDto) {
+
+        String email = studentRegistrationDto.getEmail();
+        String password = studentRegistrationDto.getPassword();
     
         // check if password is over 4 characters
         if (!passwordIsStrong(password)){
-            return ResponseEntity.badRequest().body("Ensure your password is over 4 characters long."); 
+            return "reidrect:/signup?weakPassword"; 
         }
     
         try {
             if (!emailIsCorrect(email)) {
-                return ResponseEntity.badRequest().body("You must use your @wisc.edu email!");
+                return "reidrect:/signup?invalidEmail"; 
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             // handles not having the '@' sign
-            return ResponseEntity.badRequest().body("Please enter a valid email address!");
+            return "reidrect:/signup?invalidEmail"; 
         }
 
         // check if email exists
         if (emailExists(email)){
-            return ResponseEntity.badRequest().body("Your email already exists!");
-        }
-
-        Student student = new Student(email, password);
+            return "redirect:/signup?emailExists"; 
+        }        
         
-        
-        try {
-            studentRepository.save(student);
-        } catch (Exception e){
-            return ResponseEntity.ok(new AuthenticationResponse("Error during signin"));
-        }
-
     
-        return ResponseEntity.ok(new AuthenticationResponse("Student signed up successfully under the email " + email + "!"));
-    }
 
-
-    @PostMapping("/login")
-    private ResponseEntity<?> signInStudent(@RequestBody AuthenticationRequest authenticationRequest){
-        System.out.println("Attempting to log in user");
-        String email = authenticationRequest.getEmail();
-        String password = authenticationRequest.getPassword();
-        try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
-            System.out.println("trying");        
-
-        } catch (Exception e) {
-            System.out.println("Caught");
-            return ResponseEntity.badRequest().body("Unable to login user!");
-
-        }
-
-        return ResponseEntity.ok(new AuthenticationResponse("Successful login!"));
+        userService.save(studentRegistrationDto);
+        return "redirect:/signup?success";
 
     }
-
 
     private boolean emailIsCorrect(String email) throws ArrayIndexOutOfBoundsException {
         String[] parts = email.split("@");
@@ -97,7 +96,7 @@ public class AuthController {
     }
 
     private boolean passwordIsStrong(String pass) {
-        return pass.length() > 4;
+        return pass.length() > 5;
     }
 
 }

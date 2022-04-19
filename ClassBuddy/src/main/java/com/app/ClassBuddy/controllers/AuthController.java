@@ -1,27 +1,17 @@
 package com.app.ClassBuddy.controllers;
 
-import com.app.ClassBuddy.database.daos.StudentDAO;
 import com.app.ClassBuddy.database.documents.Student;
 import com.app.ClassBuddy.database.dtos.StudentRegistrationDto;
 import com.app.ClassBuddy.database.respositories.StudentRepository;
-import com.app.ClassBuddy.models.AuthenticationRequest;
-import com.app.ClassBuddy.models.AuthenticationResponse;
 import com.app.ClassBuddy.services.UserService;
 
-import org.springframework.http.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -35,9 +25,6 @@ public class AuthController {
     private StudentRepository studentRepository;
 
     @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
     UserService userService;
 
     @PostMapping("/signup")
@@ -46,9 +33,33 @@ public class AuthController {
     }
 
     @GetMapping("/signup")
-    public String showRegistartaionForm(Model model) {
+    public String signupPage(Model model) {
         model.addAttribute("student", new Student());
         return "registration";
+    }
+
+    @GetMapping("/login")
+    public String loginPage() {
+        return "LoginPage";
+    }
+
+    @PostMapping("/login")
+    public ModelAndView loginUser(@ModelAttribute("student") Student student) {
+        // get user with email
+        System.out.println("HERE IN LOGIN CONTROLLER");
+ //       Student found = studentRepository.findByEmail(student.getEmail());
+        Student found = studentRepository.findByEmail("email");
+
+        if (found == null) {
+            //return "redirect:/login?userNotFound";
+        }
+
+        ModelAndView model = new ModelAndView("ProfilePage");
+        model.addObject("student", found);
+        return model;
+        // user found, take them to their profile 
+       // ViewController.userProf(found);   
+        //return "redirect:/profile";
     }
 
     private String validateStudentSignup(StudentRegistrationDto studentRegistrationDto) {
@@ -58,16 +69,16 @@ public class AuthController {
     
         // check if password is over 4 characters
         if (!passwordIsStrong(password)){
-            return "reidrect:/signup?weakPassword"; 
+            return "redirect:/signup?weakPassword"; 
         }
     
         try {
             if (!emailIsCorrect(email)) {
-                return "reidrect:/signup?invalidEmail"; 
+                return "redirect:/signup?invalidEmail"; 
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             // handles not having the '@' sign
-            return "reidrect:/signup?invalidEmail"; 
+            return "redirect:/signup?invalidEmail"; 
         }
 
         // check if email exists

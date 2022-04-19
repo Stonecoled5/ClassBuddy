@@ -14,6 +14,7 @@ public class Student {
     private String email;
     private String firstName;
     private String lastName;
+    private String phoneNumber;
     private int year; // 1 = Fresh. 2 = Soph. 3 = Jr. 4 = Sr. 5 = Other
     private String username;
     private ArrayList<Course> schedule;
@@ -28,6 +29,13 @@ public class Student {
     public Student() {
     }
 
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
 
     public void setId(String id) {
         this.id = id;
@@ -55,17 +63,18 @@ public class Student {
     public void setSchedule(ArrayList<Course> schedule) {
         this.schedule = schedule;
     }
+
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public void setSchedule(List<Course> courses) {
+    public void addToSchedule(List<Course> courses) {
         for (Course c : courses){
-            setSchedule(c);
+            addToSchedule(c);
         }
     }
 
-    public void setSchedule(Course course) {
+    public void addToSchedule(Course course) {
         schedule.add(course);
     }
 

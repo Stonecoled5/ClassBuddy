@@ -43,7 +43,7 @@ public class StudentDAO {
             if (s.getSchedule().contains(c)) {
                 return;
             }
-            s.setSchedule(c);
+            s.addToSchedule(c);
             mongoTemplate.save(s);
         }
     }

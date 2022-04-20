@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Profile</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+</head>
+<body>
+
+<script>
+	
+	// var search = document.querySelector('#search');
+	// var results = document.querySelector('#searchresults');
+	// var templateContent = document.querySelector('#resultstemplate').content;
+	// search.addEventListener('keyup', function handler(event) {
+	// 	while (results.children.length) results.removeChild(results.firstChild);
+	// 	var inputVal = new RegExp(search.value.trim(), 'i');
+	// 	var clonedOptions = templateContent.cloneNode(true);
+	// 	var set = Array.prototype.reduce.call(clonedOptions.children, function searchFilter(frag, el) {
+	// if (inputVal.test(el.textContent) && frag.children.length < 5) frag.appendChild(el);
+	// 		return frag;
+	// 	}, document.createDocumentFragment());
+	// 	results.appendChild(set);
+	// });
+
+
+	// function onButtonClick(){
+	// document.getElementById('email').className="show";
+	// document.getElementById('classesName').className="show";
+	// };	
+
+</script>
+
+.hide{
+	display:none;
+  }
+  .show{
+	display:block;
+  }
+
+	<!-- create navigation bar ( header) -->
+	<nav class="navbar navbar-inverse navbar-fixed-top" style="text-align:center">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span><span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+
+
+				<a class="navbar-brand" href="ExplorePage.html" th:href="@{/}">Explore</a>
+				<a class="navbar-brand" href="ProfilePage.html" th:href="@{/profile}">Profile</a>
+				<a class="navbar-brand" th:href="@{/profile/edit}">Edit Profile</a>
+
+				
+			</div>
+		</div>
+	</nav>
+
+<br>
+<br>
+	<!-- Create HTML registration form -->
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+
+				<!-- success message -->
+				<div th:if="${param.success}">
+					<div class="alert alert-info">You've successfully registered
+						to our awesome app!</div>
+				</div>
+				<br>
+				<div class="display">
+					<h1> <span th:text="${student.firstName}"></span> <span th:text="${student.lastName}"></span>'s Profile</h1>
+
+				</div>
+				<br>
+				<h4>Edit Your Profile Picture</h4>
+				<br>
+				
+				<form th:action="@{/registration}" method="post" th:object="${student}">
+					<div class="form-group">
+						<label class="control-label" for="email"> Email </label>
+						</br>
+						<h4 th:text="${student.email}"></h4>
+						<!-- get email from database -->
+						<button class="submit" onClick="" style="Background: url(edit.png); height:19px;width:19px"></button>
+					</div>
+
+					<!-- <div class="form-group">
+						<label class="control-label" for="phoneNumber"> Phone Number </label> 
+						<input id="phoneNumber" class="form-control" th:field="*{phoneNumber}"
+							required autofocus="autofocus" style="width:150px"/>
+					</div> -->
+				</form>
+				</br>
+
+
+				<form th:action="@{/addCourse}" method="post" th:object="${student}">
+					<div class="form-group">
+						<label class="control-label"> Add a Course to Your Schedule </label> 
+						<input class="form-control" th:value="${courseName}" name="courseName"
+							required autofocus="autofocus" style="width:150px"/>
+					</div>
+					<button type="submit" class="btn btn-success">Add Course</button>
+				</form>
+
+					<div style="text-align:center">
+					<input type="button" id="addButton" value="Add New Class" onclick="onButtonClick()" /></div>
+					
+					<label for="exampleDataList" class="form-label">Datalist example</label>
+					<input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search...">
+					<datalist id="datalistOptions">
+						<option value="MATH 222">
+						<option value="COMP SCI 200">
+						<option value="B M E 207">
+						<option value="CHEM 103">
+						<option value="MUSIC 113">
+						<!-- Try to add ALL options through mongodb collection iteration -->
+							
+					</datalist>
+
+					<!--Show Classes-->
+					<div th:each="class: ${student.schedule}">
+						<p th:text="${class.abbreviation}"></p>
+						<p th:text="${class.number}"></p>
+
+					</div>
+					
+
+				 <form>
+						<!-- <h6 class="hide" id = "classesName">Class Name</h6>
+						<input class="hide" type="text" id="classesName" th:field="*{className}"
+							required autofocus="autofocus"/>
+ -->
+						<!-- <h6 class="hide" id="professor">Professor's Name</h6>
+						<input class="hide" type="text" id="professor" th:field="*{professor}"
+						required autofocus="autofocus"/> -->
+ 				 </form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

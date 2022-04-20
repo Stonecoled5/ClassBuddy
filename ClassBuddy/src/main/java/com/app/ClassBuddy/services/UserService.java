@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -30,15 +31,17 @@ public class UserService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Student foundStudent = studentRepository.findByEmail(username); // username will be email
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        System.out.println(email);
 
-        if (foundStudent == null) return null;
+        Student foundStudent = studentRepository.findByEmail(email); // username will be email
+        if (foundStudent == null) {
+            throw new UsernameNotFoundException(email);
+        }
 
-        String email = foundStudent.getEmail();
+        String mail = foundStudent.getEmail();
         String password = foundStudent.getPassword();
-
-        return new User(email, password, new ArrayList<>());
+        return new User(mail, new BCryptPasswordEncoder().encode(password), new ArrayList<>());
     }
 
 

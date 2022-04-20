@@ -6,8 +6,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
-import com.app.ClassBuddy.database.daos.CourseDAO;
 import com.app.ClassBuddy.database.documents.Course;
 import com.app.ClassBuddy.database.respositories.CourseRepository;
 
@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class CourseController {
+  public static final ArrayList<Course> allCourses = new ArrayList<>();
     
     @Autowired
     CourseRepository courseRepository;
@@ -90,7 +91,6 @@ public class CourseController {
       }
     
       public void parse(String responseBody) throws JSONException {
-        String s = "";
         JSONObject response = new JSONObject(responseBody);
         JSONArray courses = response.getJSONArray("results");
     
@@ -108,8 +108,9 @@ public class CourseController {
             String abbv = sub.getString("abbreviation");
     
            Course courseToAdd = new Course(courseName, Integer.toString(number), Integer.toString(code), deptName, abbv);
+           
            courseRepository.save(courseToAdd);
-
+            allCourses.add(courseToAdd);
            // University uni.courses.add(courseToAdd); // courses would be a static field for our
             // university
           } catch (JSONException e) {
@@ -122,4 +123,8 @@ public class CourseController {
       }
 
     }
+
+
+      public void addCoursesToArray() {
+      }
   }

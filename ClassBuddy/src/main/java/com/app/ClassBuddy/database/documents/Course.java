@@ -30,7 +30,7 @@ public class Course {
     this.number = number;
     this.code = code;
     this.deptName = deptName;
-      }
+    }
 
 
   public String getId() {

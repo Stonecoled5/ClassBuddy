@@ -44,7 +44,7 @@ public class CourseController {
 
         URL url = null;
         try {
-          url = new URL("https://api.madgrades.com/v1/courses?page=" + page);
+          url = new URL("https://api.madgrades.com/v1/courses?page=2");
         } catch (MalformedURLException e1) {
           // TODO Auto-generated catch block
           e1.printStackTrace();
@@ -54,7 +54,7 @@ public class CourseController {
         try {
           con = (HttpURLConnection) url.openConnection();
           con.setRequestMethod("GET");
-          con.setRequestProperty("Authorization", authorizationHeader);
+          con.setRequestProperty("Authorization", "Token token=eaf9597261dd43a58d76440198025337");
           System.out.println( "Querying page: " + page + " " + con.getResponseMessage() + " - " + con.getResponseCode() + "\n");
   
         } catch (IOException e1) {
@@ -109,8 +109,8 @@ public class CourseController {
     
            Course courseToAdd = new Course(courseName, Integer.toString(number), Integer.toString(code), deptName, abbv);
            
-           courseRepository.save(courseToAdd);
-            allCourses.add(courseToAdd);
+          //  courseRepository.save(courseToAdd);
+          //   allCourses.add(courseToAdd);
            // University uni.courses.add(courseToAdd); // courses would be a static field for our
             // university
           } catch (JSONException e) {

@@ -1,5 +1,10 @@
 package com.app.ClassBuddy.controllers;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import com.app.ClassBuddy.database.documents.Student;
 import com.app.ClassBuddy.database.dtos.StudentRegistrationDto;
 import com.app.ClassBuddy.database.respositories.StudentRepository;
@@ -20,6 +25,7 @@ public class AuthController {
 
     final private String SCHOOL_DOMAIN = "wisc.edu";
 
+    @Autowired CourseController controller;
     
     @Autowired
     private StudentRepository studentRepository;
@@ -34,6 +40,9 @@ public class AuthController {
 
     @GetMapping("/signup")
     public String signupPage(Model model) {
+
+
+        // controller.addAllCourses(); 
         model.addAttribute("student", new Student());
         return "registration";
     }
@@ -47,9 +56,9 @@ public class AuthController {
     public ModelAndView loginUser(@ModelAttribute("student") Student student) {
         // get user with email
         System.out.println("HERE IN LOGIN CONTROLLER");
- //       Student found = studentRepository.findByEmail(student.getEmail());
-        Student found = studentRepository.findByEmail("email");
-
+       Student found = studentRepository.findByEmail(student.getEmail());
+        // Student found = studentRepository.findByEmail("email");
+        
         if (found == null) {
             //return "redirect:/login?userNotFound";
         }

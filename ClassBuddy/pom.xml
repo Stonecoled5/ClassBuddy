@@ -14,7 +14,7 @@
 	<name>ClassBuddy</name>
 	<description>Connect with your friends through this app in order to see what classes and clubs you two have in common</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>8</java.version>
 	</properties>
 	<dependencies>
 		<dependency>

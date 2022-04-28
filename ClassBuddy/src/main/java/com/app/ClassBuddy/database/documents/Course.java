@@ -10,11 +10,12 @@ public class Course {
   @Id  
   private String Id;
   private String number;
-  private String code;
-  private String abbreviation;
+  private String code; // the three digit number at the end of the abbreviation
+  private String abbreviation; // the department abbreviation "COMP SCI" or "CHEM"
   private String deptName;
   private String courseName;
   private String teacher;
+  private String fullCourseName;
 
   public Course() {
     courseName = "Course";
@@ -30,11 +31,16 @@ public class Course {
     this.number = number;
     this.code = code;
     this.deptName = deptName;
+    this.fullCourseName = abbreviation + " " + code;
     }
 
 
   public String getId() {
     return this.Id;
+  }
+
+  public String getFullCourseName() {
+    return fullCourseName;
   }
 
   public String getNumber() {

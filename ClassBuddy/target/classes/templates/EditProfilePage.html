@@ -7,6 +7,40 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 	crossorigin="anonymous">
+
+<style>
+	body {
+		background-color: rgb(230, 230, 230);
+		font-family: 'proxima-nova', sans-serif;
+
+	}
+
+	.container a {
+		padding-right: 30px;
+		transition: 0.3s;
+	}
+
+	#removeCourse {
+		padding-top: 0px;
+		padding-bottom: 0px;
+	}
+
+	#submitProf {
+		transition: 0.3s;
+	}
+
+	body button {
+		transition: 0.3s;
+	}
+
+	#editProfPic {
+		display: inline-block;
+	}
+
+	footer {
+		background-color: rgb(207, 207, 207);
+	}
+</style>
 </head>
 <body>
 
@@ -46,42 +80,78 @@
 		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed"
-					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-					aria-controls="navbar">
-					<span class="sr-only">Toggle navigation</span><span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
+				data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+				aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span><span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
 
 
-				<a class="navbar-brand" href="ExplorePage.html" th:href="@{/}">Explore</a>
+				<a style="font-size: 25px; padding-right: 40px;" id="logo" class="navbar-brand" href="AboutPage.html">ClassBuddy</a>
+				<a class="navbar-brand" href="ExplorePage.html" th:href="@{/explore}">Explore</a>
 				<a class="navbar-brand" href="ProfilePage.html" th:href="@{/profile}">Profile</a>
 				<a class="navbar-brand" th:href="@{/profile/edit}">Edit Profile</a>
-
-				
+				<!-- <i id="profile" style="color: rgb(48, 48, 165); font-size: 35px; float: right; margin-left: 600px; " class="bi bi-person"></i> -->
 			</div>
 		</div>
 	</nav>
-
 <br>
 <br>
-	<!-- Create HTML registration form -->
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
-
-				<!-- success message -->
-				<div th:if="${param.success}">
-					<div class="alert alert-info">You've successfully registered
-						to our awesome app!</div>
-				</div>
 				<br>
+
+
+
+				<div th:if="${param.fileNotSaved}">
+					<div class="alert alert-danger">Profile picture could not be updated</div>
+				</div>
+
 				<div class="display">
 					<h1> Now Editing <br> <span th:text="${student.firstName}"></span> <span th:text="${student.lastName}"></span>'s Profile</h1>
 
 				</div>
 				<br>
-				<h4>Edit Your Profile Picture</h4>
+				<label class="control-label">Edit Profile Picture</label>
+				<br>
+
+				<!-- <span>
+					<div th:if="${student.getPhotosImagePath == null}"> 
+						<img src="\profile-pictures\prof-pic-male.png" width="150px" height="150px" style="border-radius: 50%;"> 
+
+					</div>
+					<div th:unless="${student.getPhotosImagePath == null}">
+						<img th:src="@{${student.getPhotosImagePath}}" width="150px" height="150px" style="border-radius: 50%;" /> 
+					</div> 
+	
+				</span>  -->
+
+
+				<div id="editProfPic">
+
+					<form id="editProfPic" method="POST" action="/photos/add" enctype="multipart/form-data">
+						<input type="file" style="width: 95px; margin-top: 15px; margin-left: 27px;" name="image" accept="image/*" />
+						<br>	
+
+						<input id="submitProf" type="submit" value="Upload" class="btn btn-info"/>
+					</form>
+
+					<form id="editProfPic" method="POST" action="/photos/remove">
+						<input id="submitProf" type="submit" class="btn btn-danger" style="margin-left: -30px;" value="Remove" />
+
+					</form>
+
+
+
+				</div>
+				<br>
+
+
+
+
+
 				<br>
 
 				
@@ -90,42 +160,53 @@
 					<div class="form-group">
 						<div class="col">
 							<label for="firstName">First Name</label>
-						  <input type="text" class="form-control" th:placeholder="${student.firstName}" style="width:250px">
+						  <input type="text" class="form-control" th:value="${student.firstName}" name="updateFirstName" style="width:250px">
 						</div>
 						<br>
 						<div class="col">
 							<label for="lastName">Last Name</label>
-						  <input type="text" class="form-control" th:placeholder="${student.lastName}" style="width:250px">
+						  <input type="text" class="form-control" th:value="${student.lastName}" name="updateLastName" style="width:250px">
 						</div>
-						<br>
-						<label class="control-label" for="email"> Email </label>
-						</br>
-						<input class="form-control" th:placeholder="${student.email}" name="email"
-						 style="width:250px"/>
-						<!-- get email from database -->
 						<br>
 						<label class="control-label" for="schoolYear">School Year</label>
 						<div class="form-check">
-						<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-							Freshman
-						</div>
-						<div class="form-check">
-						<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-							Sophomore
-						</div>
-						<div class="form-check">
-						<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-							Junior
-						</div>
-						<div class="form-check">
-						<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-							Senior
-						</div>
-						<div class="form-check">
-						<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-							Other
+							<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+								Freshman
+							</div>
+							<div class="form-check">
+							<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+								Sophomore
+							</div>
+							<div class="form-check">
+							<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+								Junior
+							</div>
+							<div class="form-check">
+							<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+								Senior
+							</div>
+							<div class="form-check">
+							<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+								Other
 						</div>
 						<br>
+
+						<label class="control-label" for="schoolYear">First Major</label>
+						<select class="form-control" name="updateMajor1" id="selectList"  style="width: 250px;">
+							<option th:each="major : ${majorList}" th:value="${major}" th:text="${major}"></option>
+						</select>
+								
+						<br>
+						<label class="control-label" for="schoolYear">Second Major</label>
+						<select class="form-control" name="updateMajor2" id="selectList"  style="width: 250px;">
+							<option th:each="major : ${majorList}" th:value="${major}" th:text="${major}"></option>
+						</select>
+
+						<br>
+
+
+
+
 						<button type="submit" class="btn btn-info">Update Profile</button>
 					<!-- <button class="submit" onClick="" style="Background: url(edit.png); height:19px;width:19px"></button> -->
 					</div>
@@ -138,50 +219,186 @@
 				</form>
 				</br>
 
-
 				<form th:action="@{/addCourse}" method="post" th:object="${student}">
 					<div class="form-group">
 						<label class="control-label"> Add a Course to Your Schedule </label> 
-						<input class="form-control" th:value="${courseName}" name="courseName"
-							required autofocus="autofocus" style="width:150px"/>
+						<input class="form-control" list="datalistOptions" th:value="${courseName}" name="courseName" placeholder="Search for a course..."
+							required autofocus="autofocus" style="width:250px"/>
+							<datalist id="datalistOptions">
+								<option value="MATH 222">
+								<option value="COMP SCI 200">
+								<option value="B M E 207">
+								<option value="CHEM 103">
+								<option value="MUSIC 113">
+								<option value="COMP SCI 537">
+								<option value="MATH 222">
+								<option value="ECON 101">
+								<option value="CHEM 104">
+								<option value="PHYSICS 201">
+								<option value="FINANCE 300">
+									<!-- Repalce list with autofill from DB search -->
 					</div>
 					<button type="submit" class="btn btn-success">Add Course</button>
 				</form>
 
-					<div style="text-align:center">
-					<input type="button" id="addButton" value="Add New Class" onclick="onButtonClick()" /></div>
-					
-					<label for="exampleDataList" class="form-label">Datalist example</label>
-					<input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search...">
-					<datalist id="datalistOptions">
-						<option value="MATH 222">
-						<option value="COMP SCI 200">
-						<option value="B M E 207">
-						<option value="CHEM 103">
-						<option value="MUSIC 113">
-						<!-- Try to add ALL options through mongodb collection iteration -->
-							
-					</datalist>
+				<br>
 
-					<!--Show Classes-->
+				<ul class="list-group">
+
 					<div th:each="class: ${student.schedule}">
-						<p th:text="${class.abbreviation}"></p>
-						<p th:text="${class.number}"></p>
+						<!-- Single class div -->
+						<form th:action="@{/deleteCourse}" method="post" th:object="${student}">
+
+							<li class="list-group-item">
+								<div class="fw-bold"> <span style="font-weight: bold;" th:text="${class.abbreviation}"></span> <span style="font-weight: bold;" th:text="${class.number}"></span> </div>
+								<span th:text="${class.courseName}"></span>
+								<!-- <input class="btn btn-danger" type="submit" value="Remove" style="float: right;" > -->
+								<input type="hidden" th:value="${class.courseName}" name="courseName">
+								<button type="submit" class="btn btn-danger" id="removeCourse" style="float: right;" >Remove</button>
+
+							</li>
+							<br>
+						</form>
+
+						<!-- <p th:text="${class.abbreviation}"></p>
+						<p th:text="${class.number}"></p> -->
 
 					</div>
-					
 
-				 <form>
-						<!-- <h6 class="hide" id = "classesName">Class Name</h6>
-						<input class="hide" type="text" id="classesName" th:field="*{className}"
-							required autofocus="autofocus"/>
- -->
-						<!-- <h6 class="hide" id="professor">Professor's Name</h6>
-						<input class="hide" type="text" id="professor" th:field="*{professor}"
-						required autofocus="autofocus"/> -->
- 				 </form>
+
+				</ul>
+
+
 			</div>
 		</div>
 	</div>
+
+
+
+
+
+	<div style="margin-top: 50px;"></div>
+	<!-- Footer -->
+<footer class="text-center text-lg-start bg-light text-muted">
+	<!-- Section: Social media -->
+	<section
+	  class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom"
+	>
+	  <!-- Left -->
+	  <div id="footer-top" class="me-5 d-none d-lg-block">
+		  <br>
+		<span >Thank you for using ClassBuddy</span>
+		<br>
+	  </div>
+	  <!-- Left -->
+  
+	  <!-- Right -->
+	  <div>
+		<a href="" class="me-4 text-reset">
+		  <i class="fab fa-facebook-f"></i>
+		</a>
+		<a href="" class="me-4 text-reset">
+		  <i class="fab fa-twitter"></i>
+		</a>
+		<a href="" class="me-4 text-reset">
+		  <i class="fab fa-google"></i>
+		</a>
+		<a href="" class="me-4 text-reset">
+		  <i class="fab fa-instagram"></i>
+		</a>
+		<a href="" class="me-4 text-reset">
+		  <i class="fab fa-linkedin"></i>
+		</a>
+		<a href="" class="me-4 text-reset">
+		  <i class="fab fa-github"></i>
+		</a>
+	  </div>
+	  <!-- Right -->
+	</section>
+	<!-- Section: Social media -->
+  
+	<!-- Section: Links  -->
+	<section class="">
+	  <div class="container text-center text-md-start mt-5">
+		<!-- Grid row -->
+		<div class="row mt-3">
+		  <!-- Grid column -->
+		  <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+			<!-- Content -->
+			<h6 class="text-uppercase fw-bold mb-4">
+			  <i class="fas fa-gem me-3"></i>About Us
+			</h6>
+			<p>
+			  ClassBuddy was created as a project for the UW-Madison Software Development Club in Spring 2022.
+			</p>
+		  </div>
+		  <!-- Grid column -->
+  
+		  <!-- Grid column -->
+		  <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+			<!-- Links -->
+			<h6 class="text-uppercase fw-bold mb-4">
+			  Made With
+			</h6>
+			<p>
+				<a th:href="@{https://spring.io/}" target="_blank" class="text-reset">Java Spring</a>
+			</p>
+			<p>
+				<a th:href="@{https://monogdb.com/}" target="_blank" class="text-reset">MongoDB</a>
+			</p>
+			<p>
+				<a th:href="@{https://thymeleaf.org/}" target="_blank" class="text-reset">Thymeleaf</a>
+			</p>
+			<p>
+			  <a th:href="@{https://getbootstrap.com/}" target="_blank" class="text-reset">Bootstrap</a>
+			</p>
+		  </div>
+		  <!-- Grid column -->
+  
+		  <!-- Grid column -->
+		  <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+			<!-- Links -->
+			<h6 class="text-uppercase fw-bold mb-4">
+			  Created By
+			</h6>
+			<p>
+			  <a href="#!" class="text-reset">Dane Jacobson</a>
+			</p>
+			<p>
+			  <a href="#!" class="text-reset">Cole Johnstone</a>
+			</p>
+			<p>
+			  <a href="#!" class="text-reset">Ananya Aggarwal</a>
+			</p>
+			<p>
+			  <a href="#!" class="text-reset">Praveen Sundaram</a>
+			</p>
+		  </div>
+		  <!-- Grid column -->
+  
+		  <!-- Grid column -->
+		  <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+			<!-- Links -->
+			<h6 class="text-uppercase fw-bold mb-4">
+			  Attributions
+			</h6>
+			<p><i class="fas fa-home me-3"></i> Thank you to Keenan Thompson for the wonderful <span> <a href="@{https://madgrades.com}">madgrades.com</a> </span></p>
+
+		  </div>
+		  <!-- Grid column -->
+		</div>
+		<!-- Grid row -->
+	  </div>
+	</section>
+	<!-- Section: Links  -->
+  
+	<!-- Copyright -->
+	<div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+	  © 2021 Copyright:
+	  <a class="text-reset fw-bold" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+	</div>
+	<!-- Copyright -->
+  </footer>
+
 </body>
 </html>

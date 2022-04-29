@@ -12,6 +12,7 @@ import com.app.ClassBuddy.database.daos.StudentDAO;
 import com.app.ClassBuddy.database.documents.Course;
 import com.app.ClassBuddy.database.documents.Image;
 import com.app.ClassBuddy.database.documents.Student;
+import com.app.ClassBuddy.database.documents.Suggestion;
 import com.app.ClassBuddy.database.documents.University;
 import com.app.ClassBuddy.database.respositories.CourseRepository;
 import com.app.ClassBuddy.database.respositories.StudentRepository;
@@ -71,25 +72,36 @@ public class ViewController {
         model.addObject("student", found);
 
         // find matching students, and add them to the model
-        ArrayList<Student> suggestedStudents = findAlikeStudents(found);
+        findAlikeStudents(found);
+        ArrayList<Student> suggestedStudents = new ArrayList<>();
+        for (Suggestion s : found.getSuggestedFriendsList()) {
+            Student suggested = getStudent(s.getEmail());
+            suggestedStudents.add(suggested);
+        }
+        model.addObject("suggestions", suggestedStudents);
+        studentRepository.save(found);
 
         return model;
     }
 
+    @PostMapping("/visitStudentProfile")
+    public ModelAndView visitStudentProfile(@ModelAttribute("profile") String email ) {
+        ModelAndView model = new ModelAndView("ProfilePage");
+        Student student = studentRepository.findByEmail(email);
+        model.addObject("student", student);        
+        return model;
+    }
 
-    private ArrayList<Student> findAlikeStudents(Student found) {
+
+    private void findAlikeStudents(Student found) {
         // parse through course repository
-        
         Stream<Student> findIterable = studentRepository.findAllBy();
-        // System.out.println(findIterable.count());
                 
         findIterable.forEach(
             s -> s.findRating(found)
             );
+        
 
-        
-        
-        return null;
     }
 
     @GetMapping("/profile/edit")

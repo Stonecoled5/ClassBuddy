@@ -98,15 +98,38 @@
 
 <br>
 <br>
-	<!-- Create HTML registration form -->
+	
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
+				<br>
+				<br>
+				<h1>Recommended Students</h1>
+				<br>
+				<div th:if="${suggestions != null && suggestions.size > 0}">
+					<div th:each="element : ${suggestions}">
+						<form th:action="@{/visitStudentProfile}" th:object="${student}" method="post">
+							<li class="list-group-item">
+								<div class="name" style="font-size: 18; font-weight: bold;">
+									<span th:text="${element.firstName}"></span> <span th:text="${element.lastName}"></span>
+								</div>
+								<span th:text="${element.major1}"></span>
+								<span th:text="${element.email}"></span>
 
-				<!-- success message -->
+								<input type="hidden" th:value="${element.email}" name="profile">
 
+								<button style="float: right;" type="submit" class="btn btn-info">
+									Visit
+								</button>	
+
+								
+						</form>
+						</li>
+						<br>
+					</div>	
+				</div>
 				
-
+				<br>
 			</div>
 	    </div>
 	</div>

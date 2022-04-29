@@ -2,11 +2,13 @@ package com.app.ClassBuddy.database.documents;
 
 import java.beans.Transient;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.web.servlet.mvc.method.annotation.ContinuationHandlerMethodArgumentResolver;
 
 @Document
 public class Student {
@@ -20,7 +22,8 @@ public class Student {
     private int year; // 1 = Fresh. 2 = Soph. 3 = Jr. 4 = Sr. 5 = Other
     private String username;
     private ArrayList<Course> schedule;
-    private ArrayList<Student> suggestedFriends;
+    private HashMap<String, Integer> suggestedFriendsList; // email, score
+    private ArrayList<Suggestion> suggestedFriends; // will hold the email of suggestions
     private String major1;
     private String major2;
     private String profilePicture;
@@ -34,6 +37,7 @@ public class Student {
         this.password = password;
         this.schedule = new ArrayList<>();
         this.suggestedFriends = new ArrayList<>();
+        this.suggestedFriendsList = new HashMap<>();
     }
 
     public Student() {
@@ -41,6 +45,33 @@ public class Student {
     }
 
 
+
+    public void addSuggestedFriendsList(Student student, Integer score) {
+        suggestedFriends.add(new Suggestion(student.getEmail(), score));
+    }
+
+    public void setSuggestedFriendsList(Student student, Integer score) {
+        int index = -1;
+        // find index to set, if no index exists, then we must add to the list
+        for (int i = 0; i < suggestedFriends.size(); ++i) {
+            if (suggestedFriends.get(i).getEmail().equals(student.email)) {
+                index = i;
+            }    
+        }
+
+        if (index < 0) {
+            addSuggestedFriendsList(student, score);
+            return;
+        } 
+
+        System.out.println("Adding " + this.email + " to " + student.getEmail());
+
+        suggestedFriends.get(index).setScore(score);
+    }
+
+    public ArrayList<Suggestion> getSuggestedFriendsList() {
+        return suggestedFriends;
+    }
 
 
     public String getProfilePicture() {
@@ -161,6 +192,7 @@ public class Student {
             return;
         }
 
+
         // points will be updated throughout this method, at the end, if the points are greater than the top 5, "this" will be added to found's recommended students
         int points = 0;
 
@@ -188,22 +220,44 @@ public class Student {
                         }
                     }
                 }
+                
+
+
 
              }
 
       }
       // End iteration
 
-      if (isSuggested(points)) {
-        found.suggestedFriends.add(this);
+      if (isSuggested(points, found)) {
+        found.setSuggestedFriendsList(this, points);
+    }
     }
 
+    private boolean isSuggested(int points, Student found) {
+        if (found.getSuggestedFriendsList() == null) {
+            return false;
+        }
+        //
+        for (Suggestion element : found.getSuggestedFriendsList()) {
+            if (element.getEmail().equals(this.email)) {
+                if (element.getScore() == points) {
+                    return false;
+                } else {
+                    setSuggestedFriendsList(found, points);
+                }
+            }
+        }
 
+        if (found.getSuggestedFriendsList().size() <= 5) {
+            return true;
+        }
 
-
-    }
-
-    private boolean isSuggested(int points) {
+        for (Suggestion element : found.getSuggestedFriendsList()) {
+            if (points > element.getScore()) {
+                return true;
+            } 
+        }
         return false;
     }
 }

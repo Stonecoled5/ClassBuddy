@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Explore ClassBuddy</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<style>
+		.btn-danger {
+			padding-top: 0px;
+			padding-bottom: 0px;
+			}
+
+		.container a {
+			padding-right: 30px;
+			transition: 0.3s;
+		}
+
+		body button {
+			transition: 0.3s;
+			margin-top: -35px;
+			
+		}
+
+		.btn {
+			border-radius: 20px;
+		}
+
+		#logo {
+			color: lightgray;
+		}
+
+		#logo:hover {
+			color: white;
+
+		}
+
+		body {
+			background-color: rgb(230, 230, 230);
+			font-family: 'proxima-nova', sans-serif;
+			margin-bottom: 50px;
+		}
+
+		footer {
+			background-color: rgb(207, 207, 207);
+		}	
+
+		#footer-top {
+			background-color: rgb(202, 202, 202);
+			font-weight: bold;
+			padding-bottom: 15px;
+		}
+	</style>
+</head>
+<body>
+
+
+	<!-- create navigation bar ( header) -->
+	<nav class="navbar navbar-inverse navbar-fixed-top" style="text-align:center">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+				data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+				aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span><span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+
+
+			<a style="font-size: 25px; padding-right: 40px;" id="logo" class="navbar-brand" th:href="@{/}">ClassBuddy</a>
+			<a class="navbar-brand"  th:href="@{/explore}">Explore</a>
+				<a class="navbar-brand"  th:href="@{/profile}">Profile</a>
+				<a class="navbar-brand" th:href="@{/profile/edit}">Edit Profile</a>
+				<a class="navbar-brand" th:href="@{/logout}">Logout</a>
+
+			</div>
+		</div>
+	</nav>
+<br>
+<br>
+	
+	<div class="container">
+		<div class="row">
+			<br>
+			<div class="col-md-6 col-md-offset-3">
+				<h1>Find Students</h1>
+				<br>
+
+				<form th:action="@{/searchStudents}" method="get">
+					<div class="input-group">
+
+						<input type="text" class="form-control" name="query" placeholder="Find Students...">
+						<span class="input-group-btn">
+						  <button style="margin-top: 0px;" class="btn btn-primary" type="submit">Search</button>
+					</div>
+
+				</form>
+
+				<br>
+
+				<div th:if="${queriedStudents != null && queriedStudents.size > 0}">
+					<div th:each="element : ${queriedStudents}">
+						<form th:action="@{/visitStudentProfile}" th:object="${student}" method="post">
+							<li style=" box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 2px 6px 0 rgba(0, 0, 0, 0.19);" class="list-group-item">
+								<div class="name" style="font-size: 18; font-weight: bold;">
+									<span style="font-size: 24px; margin-right: 3px;"  th:text="${element.firstName}"></span> <span style="font-size: 24px;" th:text="${element.lastName}"></span>
+								</div>
+
+
+
+								<i style="margin-right: 15px;" class="fa fa-calendar"></i> <span  th:text="${element.year}"></span><br>
+								<i style="margin-right: 15px;" class="fa fa-mortar-board"></i> <span  th:text="${element.major1}"></span>
+
+								<br>
+
+								<input type="hidden" th:value="${element.email}" name="profile">
+
+								<button style="float: right;" type="submit" class="btn btn-primary">
+									Visit
+								</button>	
+
+								
+						</form>
+						</li>
+						<br>
+					</div>	
+				</div>
+
+
+				<br>
+				<br>
+				<h1>Recommended Students</h1>
+				<p style="font-style: italic; margin-top: -10px;">Based on your courses!</p>
+				<br>
+				<div th:if="${suggestions != null && suggestions.size > 0}">
+					<div th:each="element : ${suggestions}">
+						<form th:action="@{/visitStudentProfile}" th:object="${student}" method="post">
+							<li style=" box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 2px 6px 0 rgba(0, 0, 0, 0.19);" class="list-group-item">
+								<div class="name" style="font-size: 18; font-weight: bold;">
+									<span style="font-size: 24px; margin-right: 3px;"  th:text="${element.firstName}"></span> <span style="font-size: 24px;" th:text="${element.lastName}"></span>
+								</div>
+
+
+
+								<i style="margin-right: 15px;" class="fa fa-calendar"></i> <span  th:text="${element.year}"></span><br>
+								<i style="margin-right: 15px;" class="fa fa-mortar-board"></i> <span  th:text="${element.major1}"></span>
+
+								<br>
+
+								<input type="hidden" th:value="${element.email}" name="profile">
+
+								<button style="float: right;" type="submit" class="btn btn-primary">
+									Visit
+								</button>	
+
+								
+						</form>
+						</li>
+						<br>
+					</div>	
+				</div>
+				
+				<br>
+			</div>
+	    </div>
+	</div>
+
+
+
+
+	<div style="margin-top: 50px;"></div>
+	<!-- Footer -->
+<footer class="text-center text-lg-start bg-light text-muted">
+	<!-- Section: Social media -->
+	<section
+	  class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom"
+	>
+	  <!-- Left -->
+	  <div id="footer-top" class="me-5 d-none d-lg-block">
+		  <br>
+		<span >Thank you for using ClassBuddy</span>
+		<br>
+	  </div>
+	  <!-- Left -->
+  
+	<!-- Section: Links  -->
+	<section class="">
+	  <div class="container text-center text-md-start mt-5">
+		<!-- Grid row -->
+		<div class="row mt-3">
+		  <!-- Grid column -->
+		  <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+			<!-- Content -->
+			<h6 class="text-uppercase fw-bold mb-4">
+			  <i class="fas fa-gem me-3"></i>About Us
+			</h6>
+			<p>
+			  ClassBuddy was created as a project for the UW-Madison Software Development Club in Spring 2022.
+			</p>
+		  </div>
+		  <!-- Grid column -->
+  
+		  <!-- Grid column -->
+		  <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+			<!-- Links -->
+			<h6 class="text-uppercase fw-bold mb-4">
+			  Made With
+			</h6>
+			<p>
+				<a th:href="@{https://spring.io/}" target="_blank" class="text-reset">Java Spring</a>
+			</p>
+			<p>
+				<a th:href="@{https://monogdb.com/}" target="_blank" class="text-reset">MongoDB</a>
+			</p>
+			<p>
+				<a th:href="@{https://thymeleaf.org/}" target="_blank" class="text-reset">Thymeleaf</a>
+			</p>
+			<p>
+			  <a th:href="@{https://getbootstrap.com/}" target="_blank" class="text-reset">Bootstrap</a>
+			</p>
+		  </div>
+		  <!-- Grid column -->
+  
+		  <!-- Grid column -->
+		  <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+			<!-- Links -->
+			<h6 class="text-uppercase fw-bold mb-4">
+			  Created By
+			</h6>
+			<p>
+			  <a href="#!" class="text-reset">Dane Jacobson</a>
+			</p>
+			<p>
+			  <a href="#!" class="text-reset">Cole Johnstone</a>
+			</p>
+			<p>
+			  <a href="#!" class="text-reset">Ananya Aggarwal</a>
+			</p>
+			<p>
+			  <a href="#!" class="text-reset">Praveen Sundaram</a>
+			</p>
+		  </div>
+		  <!-- Grid column -->
+  
+		  <!-- Grid column -->
+		  <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+			<!-- Links -->
+			<h6 class="text-uppercase fw-bold mb-4">
+			  Attributions
+			</h6>
+			<p><i class="fas fa-home me-3"></i> Thank you to Keenan Thompson for the wonderful <span> <a href="@{https://madgrades.com}">madgrades.com</a> </span></p>
+
+		  </div>
+		  <!-- Grid column -->
+		</div>
+		<!-- Grid row -->
+	  </div>
+	</section>
+	<!-- Section: Links  -->
+  
+	<!-- Copyright -->
+	<div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+	  © 2021 Copyright:
+	  <a class="text-reset fw-bold" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+	</div>
+	<!-- Copyright -->
+  </footer>
+</body>
+</html>

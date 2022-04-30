@@ -1,6 +1,4 @@
-//package Utilities;
-//import Application.Course;
-import Course;
+import com.app.ClassBuddy.database.documents.Course;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -82,6 +80,7 @@ public class CourseParser {
         String abbv = sub.getString("abbreviation");
 
        Course courseToAdd = new Course(uuidStr, courseName, number, code, deptName, abbv);
+       
        // University uni.courses.add(courseToAdd); // courses would be a static field for our
         // university
       } catch (JSONException e) {

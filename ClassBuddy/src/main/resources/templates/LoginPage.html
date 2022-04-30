@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Login</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+
+	<style>
+		
+	.btn-danger {
+		padding-top: 0px;
+		padding-bottom: 0px;
+		}
+
+	.container a {
+		padding-right: 30px;
+		transition: 0.3s;
+	}
+
+	body button {
+		transition: 0.3s;
+	}
+
+	#logo {
+		color: lightgray;
+	}
+
+	#logo:hover {
+		color: white;
+
+	}
+
+	[class^="bi-"]::before, [class*=" bi-"]::before {
+   		vertical-align: -0.3em;
+	}
+
+	body {
+		background-color: rgb(230, 230, 230);
+		font-family: 'proxima-nova', sans-serif;
+	}
+
+	footer {
+		background-color: rgb(207, 207, 207);
+	}	
+
+	#footer-top {
+		background-color: rgb(202, 202, 202);
+		font-weight: bold;
+		padding-bottom: 15px;
+	}
+</style>
+
+	</style>
+</head>
+
+<body>
+
+	<!-- create navigation bar ( header) -->
+	<nav class="navbar navbar-inverse navbar-fixed-top" style="text-align:center">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+				data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+				aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span><span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+
+
+			<a style="font-size: 25px; padding-right: 40px;" id="logo" class="navbar-brand" th:href="@{/}">ClassBuddy</a>
+			<a class="navbar-brand"  th:href="@{/explore}">Explore</a>
+				<a class="navbar-brand"  th:href="@{/profile}">Profile</a>
+				<a class="navbar-brand" th:href="@{/profile/edit}">Edit Profile</a>
+				<a class="navbar-brand" th:href="@{/logout}">Logout</a>
+
+			</div>
+		</div>
+	</nav>
+
+<br>
+<br>
+	<!-- Create HTML login form -->
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+
+				<!-- success message -->
+				<div th:if="${param.success}">
+					<div class="alert alert-info">Login Successful!</div>
+				</div>
+                <div th:if="${param.error}">
+					<div class="alert alert-danger">Failure logging in</div>
+				</div>
+				<div th:if="${param.logout}">
+					<div class="alert alert-info">You have been logged out</div>
+				</div>
+
+				<h1>Login to ClassBuddy</h1>
+				<br>
+				<form th:action="@{/login}" method="post">
+
+					<div class="form-group">
+						<label class="control-label" for="username"> Email </label> 
+						<input type="text" 
+							id="username" name="username" class="form-control" required
+							autofocus="autofocus" placeholder="Enter your @wisc.edu email" />
+					</div>
+
+					<div class="form-group">
+						<label class="control-label" for="password"> Password </label> 
+						<input
+							id="password" name="password" class="form-control" type="password"
+							 required autofocus="autofocus" />
+					</div>
+
+					<div class="form-group">
+						<button type="submit" name="login-submit" id="login-submit" class="btn btn-success">Login</button>
+						<span>New User? <a href="registration.html" th:href="@{/signup}">Register
+								here</a></span>
+					</div>
+				</form>	
+			</div>
+		</div>
+	</div>
+</body>
+</html>

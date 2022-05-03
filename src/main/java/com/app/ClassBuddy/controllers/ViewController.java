@@ -3,7 +3,6 @@ package com.app.ClassBuddy.controllers;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -11,14 +10,12 @@ import com.app.ClassBuddy.database.daos.StudentDAO;
 import com.app.ClassBuddy.database.documents.Course;
 import com.app.ClassBuddy.database.documents.Student;
 import com.app.ClassBuddy.database.documents.Suggestion;
-import com.app.ClassBuddy.database.documents.SuggestionComparator;
 import com.app.ClassBuddy.database.documents.University;
 import com.app.ClassBuddy.database.respositories.CourseRepository;
 import com.app.ClassBuddy.database.respositories.StudentRepository;
 import com.app.ClassBuddy.database.respositories.UniversityRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.aggregation.ArithmeticOperators.Mod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -26,8 +23,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -270,6 +265,7 @@ public class ViewController {
         model.addObject("suggestions", suggestedStudents);
         List<Student> studentList = studentRepository.findByFullNameStartingWith(query);
         studentList.addAll(studentRepository.findByLastNameStartingWith(query));
+        model.addObject("querySize", studentList.size());
         model.addObject("queriedStudents", studentList);
         model.addObject("suggestions", suggestedStudents);
         

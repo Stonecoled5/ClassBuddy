@@ -100,7 +100,9 @@
 					</div>
 
 				</form>
-
+				<br>
+				<h3 th:if="querySize == 0">Found: <span th:text="${querySize}"></span> Students </h3>
+				<br>
 				<br>
 
 				<div th:if="${queriedStudents != null && queriedStudents.size > 0}">
@@ -173,7 +175,7 @@
 
 
 
-	<div style="margin-top: 50px;"></div>
+	<div style="margin-top: 200px;"></div>
 	<!-- Footer -->
 <footer class="text-center text-lg-start bg-light text-muted">
 	<!-- Section: Social media -->

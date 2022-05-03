@@ -1,0 +1,20 @@
+###
+POST http://localhost:8080/students
+Content-Type: application/json
+
+[
+    {
+        "id": 2,
+        "username": "user",
+        "password": "testuserpass"
+    },
+
+    {
+        "id": 1,
+        "username": "test",
+        "password": "pass123"
+    }
+]
+
+###
+GET http://localhost:8080/students/1
